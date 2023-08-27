@@ -1,6 +1,7 @@
 import express from "express";
 import cookieParser from "cookie-parser";
 import axios from 'axios';
+import path from 'path';
 
 const PORT = 5000;
 const app = express();
@@ -29,6 +30,11 @@ app.post("/webhook", async (req, res) => {
   }
 }
 )
+app.use(express.static(path.resolve("./frontend")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve("./frontend/index.html"));
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT} `);
